@@ -7,7 +7,7 @@ name = "vsgmfss_union"
 version = "1.0.0"
 description = "GMFSS_union function for VapourSynth"
 readme = "README.md"
-requires-python = ">=3.10"
+requires-python = ">=3.8"
 license = {file = "LICENSE"}
 authors = [{name = "HolyWu", email = "holywu@gmail.com"}]
 keywords = ["GMFSS_union", "VapourSynth"]

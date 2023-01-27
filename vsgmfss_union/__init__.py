@@ -123,11 +123,10 @@ def gmfss_union(
     stream = [torch.cuda.Stream(device=device) for _ in range(num_streams)]
     stream_lock = [Lock() for _ in range(num_streams)]
 
-    match model:
-        case 0:
-            model_type = 'vanillagan'
-        case 1:
-            model_type = 'wgan'
+    if model == 0:
+        model_type = 'vanillagan'
+    elif model == 1:
+        model_type = 'wgan'
 
     module = GMFSS(model_dir, model_type, scale, ensemble)
     module.eval().to(device, memory_format=memory_format)
