@@ -43,6 +43,8 @@ def gmfss_union(
     ensemble: bool = False,
     sc: bool = True,
     sc_threshold: float | None = None,
+    tactic: bool = False,
+    use_experimental_rt: bool = True
 ) -> vs.VideoNode:
     """High Performance GMFSS with RIFE and GAN for Anime Video Frame Interpolation
 
@@ -69,6 +71,8 @@ def gmfss_union(
     :param sc:                      Avoid interpolating frames over scene changes.
     :param sc_threshold:            Threshold for scene change detection. Must be between 0.0 and 1.0.
                                     Leave it None if the clip already has _SceneChangeNext properly set.
+    :param tactic:                  Setting EDGE_MASK_CONVOLUTIONS and JIT_CONVOLUTIONS as tactic
+    :param use_experimental_rt:     Using next generation TRTModule
     """
     if not isinstance(clip, vs.VideoNode):
         raise vs.Error("gmfss_union: this is not a clip")
@@ -160,6 +164,11 @@ def gmfss_union(
             ),
         )
 
+        if tactic:
+            tactic_sources = 1 << int(tensorrt.TacticSource.EDGE_MASK_CONVOLUTIONS) | 1 << int(tensorrt.TacticSource.JIT_CONVOLUTIONS)
+        else:
+            tactic_sources = None
+
         if not os.path.isfile(trt_engine_path):
             lower_setting = LowerSetting(
                 lower_precision=LowerPrecision.FP16 if fp16 else LowerPrecision.FP32,
@@ -167,8 +176,8 @@ def gmfss_union(
                 leaf_module_list={FeatureTransformer, InstanceNorm2d},
                 max_workspace_size=trt_max_workspace_size,
                 dynamic_batch=False,
-                tactic_sources=1 << int(tensorrt.TacticSource.EDGE_MASK_CONVOLUTIONS)
-                | 1 << int(tensorrt.TacticSource.JIT_CONVOLUTIONS),
+                tactic_sources=tactic_sources,
+                use_experimental_rt=use_experimental_rt
             )
             lowerer = Lowerer.create(lower_setting=lower_setting)
             module = lowerer(

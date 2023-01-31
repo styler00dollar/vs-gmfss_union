@@ -18,7 +18,7 @@ classifiers = [
   "Topic :: Multimedia :: Video"
 ]
 dependencies = [
-  "cupy-cuda11x",
+  "cupy",
   "numpy",
   "tensorrt>=8.5.2.2",
   "torch>=1.13.0",
