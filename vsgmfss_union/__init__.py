@@ -44,7 +44,7 @@ def gmfss_union(
     sc: bool = True,
     sc_threshold: float | None = None,
     tactic: bool = False,
-    use_experimental_rt: bool = True
+    use_experimental_rt: bool = False
 ) -> vs.VideoNode:
     """High Performance GMFSS with RIFE and GAN for Anime Video Frame Interpolation
 
