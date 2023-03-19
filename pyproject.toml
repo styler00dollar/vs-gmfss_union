@@ -21,7 +21,6 @@ dependencies = [
   "cupy",
   "numpy",
   "tensorrt",
-  "torch",
   "torch-tensorrt-fx-only",
   "VapourSynth>=55"
 ]
