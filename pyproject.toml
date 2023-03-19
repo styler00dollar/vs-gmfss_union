@@ -18,11 +18,6 @@ classifiers = [
   "Topic :: Multimedia :: Video"
 ]
 dependencies = [
-  "cupy",
-  "numpy",
-  "tensorrt",
-  "torch-tensorrt-fx-only",
-  "VapourSynth>=55"
 ]
 
 [project.urls]
