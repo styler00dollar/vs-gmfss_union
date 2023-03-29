@@ -44,7 +44,6 @@ def gmfss_union(
     sc: bool = True,
     sc_threshold: float | None = None,
     tactic: bool = False,
-    use_experimental_rt: bool = False
 ) -> vs.VideoNode:
     """High Performance GMFSS with RIFE and GAN for Anime Video Frame Interpolation
 
@@ -72,7 +71,6 @@ def gmfss_union(
     :param sc_threshold:            Threshold for scene change detection. Must be between 0.0 and 1.0.
                                     Leave it None if the clip already has _SceneChangeNext properly set.
     :param tactic:                  Setting EDGE_MASK_CONVOLUTIONS and JIT_CONVOLUTIONS as tactic
-    :param use_experimental_rt:     Using next generation TRTModule
     """
     if not isinstance(clip, vs.VideoNode):
         raise vs.Error("gmfss_union: this is not a clip")
@@ -177,7 +175,6 @@ def gmfss_union(
                 max_workspace_size=trt_max_workspace_size,
                 dynamic_batch=False,
                 tactic_sources=tactic_sources,
-                use_experimental_rt=use_experimental_rt
             )
             lowerer = Lowerer.create(lower_setting=lower_setting)
             module = lowerer(
